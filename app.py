@@ -1,7 +1,45 @@
-from flask import Flask, render_template, url_for
+
+from flask import Flask, render_template, url_for,request,redirect
 
 app=Flask(__name__)
 
+
+
+
+#########Recuperar la informacion desde los formularios#####
+##############Formularios de Usuarios
+
+@app.route('/addusuario',methods=['POST'])
+def add_usuario():
+    datos=request.form
+    nombre=datos['nombre']
+    apellido=datos['apellido']
+    usuario=datos['email']
+    rol=datos['rol']
+    foto=datos['foto']
+    passw=datos['password']
+    print(nombre)
+    print(apellido)
+    print(usuario)
+    print(rol)
+    print(foto)
+    print(passw)
+    
+    return redirect(url_for('menu_user'))
+
+################Recuperar desde el Formulario Materias
+@app.route('/addmateria',methods=['POST'])
+def add_materia():
+    datos=request.form
+    codigomat=datos['codigomat']
+    nombremat=datos['nombremat']
+       
+    return redirect(url_for('menu_materias'))  
+
+
+
+
+#####################Rutas de Navegacion#######################################
 @app.route('/')
 def index():
     return render_template('login.html')
@@ -11,10 +49,24 @@ def index():
 def login():
     return render_template('login.html')
 
+
+#@app.route('/menu')
+#@app.route('/menu/<username>/')
+#def menu(username):
+#    return render_template('menu.html',usuvista=username)
+
+#Detectar los metodos de envio desde el formulario de login
+
+#@app.route('/menu', methods=['GET','POST'])
+#def menu():
+#    if request.method=='POST':
+#        return render_template('menu.html')
+#    else:
+#       return '<h1>Metodo GET</h1>'
+
 @app.route('/menu')
 def menu():
     return render_template('menu.html')
-
 
 @app.route('/usuarios')
 def menu_user():

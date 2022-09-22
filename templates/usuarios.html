@@ -15,24 +15,24 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Gestion de Usuarios</h1>
                             </div>
-                            <form class="user" action="/usuarios" method="POST">
+                            <form class="user" action="/addusuario" method="POST">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="text" class="form-control form-control-user mb-3" id="nombre1"
-                                            name="nombre1" placeholder="Nombres">
+                                            name="nombre" placeholder="Nombres">
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-user mb-3" id="nombre2"
-                                            name="nombre2" placeholder="Apellidos">
+                                            name="apellido" placeholder="Apellidos">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="email" class="form-control form-control-user mb-3" id="usuario"
-                                            name="usuario" placeholder="Email">
+                                            name="email" placeholder="Email">
                                     </div>
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <select class="form-select" aria-label="Default select example" id="rol">
+                                        <select class="form-select" aria-label="Default select example" id="rol" name="rol">
                                             <option value="seleccione" selected>Seleccione</option>
                                             <option value="Docente">Docente</option>
                                             <option value="Estudiante">Estudiante</option>
@@ -41,20 +41,18 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" class="form-control form-control-user mb-3" id="pass"
-                                            name="pass" placeholder="Contraseña">
+                                        <input type="text" class="form-control form-control-user mb-3" id="pass"
+                                            name="foto" placeholder="Url Fotografia">
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="password" class="form-control form-control-user"
-                                            id="exampleRepeatPassword" placeholder="Repetir Contraseña">
+                                            id="exampleRepeatPassword" name="password" placeholder="Contraseña">
                                     </div>
                                 </div>
 
 
-
                                 <div class="d-flex gap-2">
-                                    <button id="boton-accion" class="btn btn-primary" type="button"
-                                        onclick="verdatos();">Agregar</button>
+                                    <button id="boton-accion" class="btn btn-primary" type="submit">Agregar</button>
                                     <button class="btn btn-danger" type="button"
                                         onclick="vercancelar()">Cancelar</button>
                                 </div>
