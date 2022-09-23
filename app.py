@@ -1,4 +1,5 @@
 
+from tkinter.messagebox import RETRY
 from flask import Flask, render_template, url_for,request,redirect
 
 app=Flask(__name__)
@@ -7,6 +8,22 @@ app=Flask(__name__)
 
 
 #########Recuperar la informacion desde los formularios#####
+###Recuperar y Almancenar los Registros de usuario######################
+
+@app.route('/addregistro', methods=['POST'])
+def add_registro():
+    datos=request.form
+    nom=datos['nombre']
+    ape=datos['apellido']
+    usu=datos['email']
+    foto=datos['foto']
+    passw=datos['passwd']
+    if nom !='':
+        return '<h3>'+nom + ' ' + ape +' ' + usu +' ' + ' ' + foto + ' ' + passw + '</h3>'
+    else:
+        return '<h1>No Ingreso el Nombre<h1>'    
+
+
 ##############Formularios de Usuarios
 
 @app.route('/addusuario',methods=['POST'])
@@ -49,6 +66,9 @@ def index():
 def login():
     return render_template('login.html')
 
+@app.route('/registro')
+def registro():
+    return render_template('registro.html')
 
 #@app.route('/menu')
 #@app.route('/menu/<username>/')
