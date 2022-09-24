@@ -1,10 +1,11 @@
 
+from datetime import datetime
 from tkinter.messagebox import RETRY
-from flask import Flask, render_template, url_for,request,redirect
+from flask import Flask, render_template, url_for,request,redirect, flash
 
 app=Flask(__name__)
 
-
+app.secret_key='mi clave de secreta'+datetime.now
 
 
 #########Recuperar la informacion desde los formularios#####
@@ -18,10 +19,20 @@ def add_registro():
     usu=datos['email']
     foto=datos['foto']
     passw=datos['passwd']
-    if nom !='':
-        return '<h3>'+nom + ' ' + ape +' ' + usu +' ' + ' ' + foto + ' ' + passw + '</h3>'
+    if nom=='' and ape=='' and usu=='' and foto=='' and passw=='':
+        flash("Datos Imcompletos")
+    elif len(passw)<8:
+        flash('Contraseña no cumple tamaño minimo')
     else:
-        return '<h1>No Ingreso el Nombre<h1>'    
+        flash('Informacion Almacenada')    
+
+    #flash(nom + ' ' + ape +' ' + usu +' ' + ' ' + foto + ' ' + passw)
+    return redirect(url_for('registro'))
+    # validacion de los registros
+    #if nom !='':
+    #    return '<h3>'+nom + ' ' + ape +' ' + usu +' ' + ' ' + foto + ' ' + passw + '</h3>'
+    #else:
+    #    return '<h1>No Ingreso el Nombre<h1>'    
 
 
 ##############Formularios de Usuarios
@@ -69,6 +80,10 @@ def login():
 @app.route('/registro')
 def registro():
     return render_template('registro.html')
+
+@app.route('/mensajes')
+def mensajes():
+    return render_template('mensajes.html')    
 
 #@app.route('/menu')
 #@app.route('/menu/<username>/')
