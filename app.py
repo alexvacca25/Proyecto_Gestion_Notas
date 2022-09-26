@@ -2,10 +2,11 @@
 from datetime import datetime
 from tkinter.messagebox import RETRY
 from flask import Flask, render_template, url_for,request,redirect, flash
+import controlador
 
 app=Flask(__name__)
 
-app.secret_key='mi clave de secreta'+datetime.now
+app.secret_key='mi clave de secreta'+str(datetime.now)
 
 
 #########Recuperar la informacion desde los formularios#####
@@ -17,14 +18,22 @@ def add_registro():
     nom=datos['nombre']
     ape=datos['apellido']
     usu=datos['email']
-    foto=datos['foto']
-    passw=datos['passwd']
-    if nom=='' and ape=='' and usu=='' and foto=='' and passw=='':
+    p1=datos['pass1']
+    p2=datos['pass2']
+    
+    if nom=='' and ape=='' and usu=='' and p1=='' and p2=='':
         flash("Datos Imcompletos")
-    elif len(passw)<8:
+    elif p1!=p2:
+        flash("Las Contraseñas no Coinciden")    
+    elif len(p1)<8:
         flash('Contraseña no cumple tamaño minimo')
     else:
-        flash('Informacion Almacenada')    
+        resultado=controlador.insertar_usuarios(nom,ape,usu,p1)
+        if resultado:
+            flash('Informacion Almacenada')
+        else:
+            flash('Error en Almacenamiento')    
+           
 
     #flash(nom + ' ' + ape +' ' + usu +' ' + ' ' + foto + ' ' + passw)
     return redirect(url_for('registro'))
