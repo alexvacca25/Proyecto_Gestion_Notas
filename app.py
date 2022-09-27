@@ -3,6 +3,7 @@ from datetime import datetime
 from tkinter.messagebox import RETRY
 from flask import Flask, render_template, url_for,request,redirect, flash
 import controlador
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app=Flask(__name__)
 
@@ -20,7 +21,7 @@ def add_registro():
     usu=datos['email']
     p1=datos['pass1']
     p2=datos['pass2']
-    
+    p1enc=generate_password_hash(p1)
     if nom=='' and ape=='' and usu=='' and p1=='' and p2=='':
         flash("Datos Imcompletos")
     elif p1!=p2:
@@ -28,7 +29,7 @@ def add_registro():
     elif len(p1)<8:
         flash('Contraseña no cumple tamaño minimo')
     else:
-        resultado=controlador.insertar_usuarios(nom,ape,usu,p1)
+        resultado=controlador.insertar_usuarios(nom,ape,usu,p1enc)
         if resultado:
             flash('Informacion Almacenada')
         else:
