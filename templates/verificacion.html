@@ -36,6 +36,22 @@
                     <div class="text-center">
                       <a class="small" href="{{ url_for('login') }}">Ingresar al Sistema</a>
                     </div>
+
+                    <hr>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    
+                    <div class="alert alert-dismissible alert-info">
+                      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                      <h4 class="alert-heading">Validacion de la Cuenta</h4>
+                      <p class="mb-0">{{message}}</a>.</p>
+                    </div>
+                    
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}     
+
                    <!--
                     <div class="text-center">
                       <a class="small" href="#">Olvido su Contraseña?</a>
