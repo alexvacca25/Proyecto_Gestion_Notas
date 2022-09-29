@@ -1,5 +1,7 @@
 
+
 from datetime import datetime
+import re
 from tkinter.messagebox import RETRY
 from flask import Flask, render_template, url_for,request,redirect, flash
 import controlador
@@ -12,6 +14,20 @@ app.secret_key='mi clave de secreta'+str(datetime.now)
 
 #########Recuperar la informacion desde los formularios#####
 ###Recuperar y Almancenar los Registros de usuario######################
+
+@app.route('/activar',methods=['POST'])
+def activar_cuenta():
+    datos=request.form
+    username=datos['username']
+    codver=datos['codverificacion']
+    resultado=controlador.activar_usuario(username,codver)
+    if resultado:
+        flash('Cuenta Activada Satisfactoriamente')    
+    else:
+        flash('Error en Activacion') 
+
+    return redirect(url_for('verificar'))           
+
 
 @app.route('/validarlogin', methods=['POST'])
 def val_user():
@@ -26,8 +42,8 @@ def val_user():
             flash('Error al Ingresar')
             return redirect(url_for('login'))
         else:
-            print(resultado[0]['verificado'])
-            if(resultado[0]['verificado']=="Y"):
+            print('Resultado: '+ str(resultado[0]['verificado']))
+            if(resultado[0]['verificado']==1):
             
                 if check_password_hash(resultado[0]['passwd'],passwd):
                     return redirect(url_for('menu'))
