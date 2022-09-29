@@ -13,6 +13,36 @@ app.secret_key='mi clave de secreta'+str(datetime.now)
 #########Recuperar la informacion desde los formularios#####
 ###Recuperar y Almancenar los Registros de usuario######################
 
+@app.route('/validarlogin', methods=['POST'])
+def val_user():
+    datos=request.form
+    username=datos['username']
+    passwd=datos['password']
+    if username=='' or passwd=='':
+        flash('Datos Incompletos')
+    else:
+        resultado=controlador.validar_usuarios(username)
+        if resultado==False:
+            flash('Error al Ingresar')
+            return redirect(url_for('login'))
+        else:
+            print(resultado[0]['verificado'])
+            if(resultado[0]['verificado']=="Y"):
+            
+                if check_password_hash(resultado[0]['passwd'],passwd):
+                    return redirect(url_for('menu'))
+                else:
+                    flash('Contraseña Invalida')
+                    return redirect(url_for('login'))
+
+            else:
+                return redirect(url_for('verificar'))
+
+    
+        
+       
+
+
 @app.route('/addregistro', methods=['POST'])
 def add_registro():
     datos=request.form

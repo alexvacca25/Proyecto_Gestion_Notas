@@ -29,3 +29,27 @@ def insertar_usuarios(nombre,apellido,usuario,passwd):
         return True
     except:
         return False
+
+def validar_usuarios(username):
+    try:
+        db=conectar_db()
+        cursor=db.cursor()
+        sql="SELECT * FROM usuarios WHERE usuario=?"
+        cursor.execute(sql,[username])
+        resultado=cursor.fetchone()
+        
+        usuario=[
+            {
+            'id':resultado[0],
+            'nombre':resultado[1],
+            'apellido':resultado[2],
+            'usuario':resultado[3],
+            'passwd':resultado[4], 
+            'codver':resultado[5], 
+            'verificado':resultado[6], 
+            'rol':resultado[7]
+            }
+            ]
+        return usuario   
+    except:
+        return False    
