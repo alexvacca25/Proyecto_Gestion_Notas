@@ -23,7 +23,7 @@ def insertar_usuarios(nombre,apellido,usuario,passwd):
         db=conectar_db()
         cursor=db.cursor()
         sql="INSERT INTO usuarios(nombre,apellido,usuario,passw,cod_verificacion,verificado,id_rol) VALUES(?,?,?,?,?,?,?)"
-        cursor.execute(sql,[nombre,apellido,usuario,passwd,cod_ver,0,1])
+        cursor.execute(sql,[nombre,apellido,usuario,passwd,cod_ver,1,1])
         db.commit()
         envioemail.enviar_email(usuario,cod_ver)
         return True
@@ -62,5 +62,42 @@ def activar_usuario(username,codver):
         cursor.execute(sql,[username,codver])
         db.commit()
         return True      
+    except:
+        return False
+
+
+def listar_usuarios():
+    try:
+        db=conectar_db()
+        cursor=db.cursor()
+        sql="SELECT * FROM usuarios "
+        cursor.execute(sql)
+        resultado=cursor.fetchall()
+        usuarios=[]
+        for u in resultado:
+            registro = {
+                'id':u[0],
+                'nombre':u[1],
+                'apellido':u[2],
+                'usuario':u[3],
+                }
+            usuarios.append(registro)    
+
+                
+        return usuarios   
+    except:
+        return False    
+
+
+def insertar_mensajes(rem,dest,asunto,cuerpo):
+    
+    try:
+        db=conectar_db()
+        cursor=db.cursor()
+        sql="INSERT INTO mensajeria(remitente,destinatario,asunto,mensaje) VALUES(?,?,?,?)"
+        cursor.execute(sql,[rem,dest,asunto,cuerpo])
+        db.commit()
+        
+        return True
     except:
         return False

@@ -1,9 +1,7 @@
-
-
 from datetime import datetime
 import re
 from tkinter.messagebox import RETRY
-from flask import Flask, render_template, url_for,request,redirect, flash
+from flask import Flask, render_template, url_for,request,redirect, flash,session
 import controlador
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -46,7 +44,11 @@ def val_user():
             if(resultado[0]['verificado']==1):
             
                 if check_password_hash(resultado[0]['passwd'],passwd):
-                    return redirect(url_for('menu'))
+                    session['username']=username
+                    session['nombre']=resultado[0]['nombre'] +" "+resultado[0]['apellido']
+                    listadouser=controlador.listar_usuarios()
+                    print(listadouser)
+                    return render_template('mensajeria.html',datauser=listadouser)
                 else:
                     flash('Contraseña Invalida')
                     return redirect(url_for('login'))
@@ -55,7 +57,22 @@ def val_user():
                 return redirect(url_for('verificar'))
 
     
-        
+@app.route('/enviarmensajes',methods=['POST'])
+def enviar_mesanjes():
+    datos=request.form
+    remitente=session['username']
+    asunto=datos['asunto']
+    destinatario=datos['destinatario']
+    cuerpo=datos['cuerpo']
+    resultado=controlador.insertar_mensajes(remitente,destinatario,asunto,cuerpo)
+    if resultado:
+        flash('Mensaje Enviado Correctamente')
+         
+    else:
+        flash('Error en el Envio')   
+     
+    listadouser=controlador.listar_usuarios()    
+    return render_template('mensajeria.html',datauser=listadouser)
        
 
 
@@ -142,6 +159,9 @@ def verificar():
     return render_template('verificacion.html')
 
 
+@app.route('/mensajeria')
+def mensajeria():
+    return render_template('mensajeria.html')
 
 @app.route('/mensajes')
 def mensajes():
