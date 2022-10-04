@@ -1,7 +1,10 @@
+
+
 from datetime import datetime
 import re
 from tkinter.messagebox import RETRY
-from flask import Flask, render_template, url_for,request,redirect, flash,session
+from unittest import result
+from flask import Flask, jsonify, render_template, url_for,request,redirect, flash,session
 import controlador
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -12,6 +15,34 @@ app.secret_key='mi clave de secreta'+str(datetime.now)
 
 #########Recuperar la informacion desde los formularios#####
 ###Recuperar y Almancenar los Registros de usuario######################
+
+@app.route('/listamensindv', methods=['GET','POST'])
+def listar_mens_ind():
+    if request.method=='POST':
+        datos=request.get_json()
+        username=datos['username']
+        tipo=datos['tipo']
+        if tipo==1:
+            resultado=controlador.listar_mensajes(1,'')
+        else:    
+            resultado=controlador.listar_mensajes(2,username)
+
+        return jsonify(resultado)
+    else:
+         resultado=controlador.listar_mensajes(1,'') 
+         return jsonify(resultado)  
+
+
+@app.route('/listarmensajes')
+def listar_mensajes():
+    resultado=controlador.listar_mensajes(1,'')
+    return jsonify(resultado)
+
+@app.route('/listarusuarios')
+def lista_gral_usuarios():
+    resultado=controlador.lista_gral_usuarios()
+    return jsonify(resultado)
+
 
 @app.route('/activar',methods=['POST'])
 def activar_cuenta():
@@ -46,7 +77,7 @@ def val_user():
                 if check_password_hash(resultado[0]['passwd'],passwd):
                     session['username']=username
                     session['nombre']=resultado[0]['nombre'] +" "+resultado[0]['apellido']
-                    listadouser=controlador.listar_usuarios()
+                    listadouser=controlador.listar_usuarios(username)
                     print(listadouser)
                     return render_template('mensajeria.html',datauser=listadouser)
                 else:
@@ -71,7 +102,7 @@ def enviar_mesanjes():
     else:
         flash('Error en el Envio')   
      
-    listadouser=controlador.listar_usuarios()    
+    listadouser=controlador.listar_usuarios(remitente)    
     return render_template('mensajeria.html',datauser=listadouser)
        
 
