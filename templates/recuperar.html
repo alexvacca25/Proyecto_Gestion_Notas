@@ -16,45 +16,30 @@
                 <div class="col-lg-6">
                   <div class="p-5">
                     <div class="text-center">
-                      <h1 class="h4 text-gray-900 mb-4">Bienvenido</h1>
+                      <h1 class="h4 text-gray-900 mb-4">Recuperar Contraseña</h1>
                     </div>
-                    <form class="user" action="/validarlogin" method="post">
+                    <form class="user" action="/validaremail" method="post">
                       <div class="form-group mb-3">
                         <input type="email" class="form-control form-control-user" name="username" aria-describedby="emailHelp" placeholder="Ingrese el Usuario">
                       </div>
-                      <div class="form-group mb-3">
-                        <input type="password" class="form-control form-control-user" id="exampleInputPassword" name="password" placeholder="Contraseña">
-                      </div>
-                                      
-                      <div class="form-group mb-3">
-                        <div class="custom-control custom-checkbox small">
-                          <input type="checkbox" class="custom-control-input" id="customCheck">
-                          <label class="custom-control-label" for="customCheck">Recordar</label>
-                        </div>
-                      </div>
+                     
                       
-                      <button class="btn btn-outline-secondary" id="alertas" type="submit">Ingresar</button>
+                      <button class="btn btn-outline-secondary" id="alertas" type="submit">Recuperar Contraseña</button>
 
                      
                     </form>
-                   
-                    <div class="text-center">
-                      <a class="small" href="{{ url_for('registro') }}">Registrarse</a>
-                    </div>
-                    <div class="text-center">
-                      <a class="small" href="{{ url_for('recuperar') }}">Olvide mi Contraseña</a>
-                    </div>
-
-                    
-
                     <hr>
+                    <div class="text-center">
+                        <a class="small" href="{{ url_for('login') }}">Ingresar al Sistema</a>
+                      </div>
+                      <hr>
                     {% with messages = get_flashed_messages() %}
                     {% if messages %}
                     {% for message in messages %}
                     
                     <div class="alert alert-dismissible alert-info">
                       <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                      <h4 class="alert-heading">Ingreso al Sistema</h4>
+                      <h4 class="alert-heading">Validacion de Cuenta</h4>
                       <p class="mb-0">{{message}}</a>.</p>
                     </div>
                     

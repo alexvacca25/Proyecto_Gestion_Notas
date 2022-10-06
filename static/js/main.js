@@ -1,10 +1,11 @@
 function verdatos(){
     var listapost;
-    identificador = document.getElementById('login_username').value;
+    identificador = document.getElementById("login_username").innerHTML;
+    
     console.log(identificador)
-    var url="http://localhost:5000/listamensindv";
+    var url="/listamensindv";
     var data = {
-               "username":"alexillo@gmail.com",
+               "username":identificador,
                "tipo":2
                 };
     
@@ -24,6 +25,7 @@ function verdatos(){
         info=info+"<td>"+listapost[i]['id'] + "</td>"
         info=info+"<td>"+listapost[i]['remitente'] + "</td>"
         info=info+"<td>"+listapost[i]['destinatario'] + "</td>"
+        info=info+"<td>"+listapost[i]['fecha'] + "</td>"
         info=info+"<td>"+listapost[i]['asunto'] + "</td>"
         info=info+"<td>"+listapost[i]['cuerpo'] + "</td>"
         if(listapost[i]['tipo']=='Mensaje Enviado'){
