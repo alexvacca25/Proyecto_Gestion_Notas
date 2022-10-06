@@ -209,8 +209,7 @@ def add_materia():
 #####################Rutas de Navegacion#######################################
 @app.route('/')
 def index():
-    return "Hola Mundo"
-
+    return render_template('login.html')
 
 @app.route('/login')
 def login():
