@@ -18,6 +18,7 @@ def restablece_clave():
     print(datos)
     usu=datos['recuuser']
     p1=datos['passwd1']
+    
     p2=datos['passwd2']
     p1enc=generate_password_hash(p1)
     if p1!=p2:
